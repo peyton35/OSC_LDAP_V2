@@ -43,5 +43,3 @@ class LDAPAPI:
         print(f"Joined as {self.LDAP_ADMIN_USER}")
 
     
-    
-

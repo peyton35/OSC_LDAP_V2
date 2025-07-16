@@ -32,6 +32,3 @@ def get_groups(API : LDAPAPI):
 
     return groupsAndMembers # Comes out as a list of tuples | exe: [(AvC-Staff, [Jimmy, John, James])]
 
-
-
-
