@@ -28,7 +28,34 @@ def get_groups(API : LDAPAPI):
     groupsAndMembers = []  
 
     for group in API.conn.entries:
-        groupsAndMembers.append((group.cn, group.member))
+        users_names = []
+
+        for user in group.member:
+            users_names.append(CONVERT_CN_TO_FIRSTLAST(user))
+
+        groupsAndMembers.append((group.cn, users_names))
 
     return groupsAndMembers # Comes out as a list of tuples | exe: [(AvC-Staff, [Jimmy, John, James])]
+
+def get_membership_status(API : LDAPAPI, usercn : str):
+    groups_member_is_part_of = []
+    member = ""
+    groups = get_groups(API)
+
+
+    for group in groups:
+        GroupName = group[0]
+        Members = group[1]
+
+
+        if GroupName not in groups_member_is_part_of:
+            for user in Members:
+                if usercn.lower() in user.lower():
+                    member = user
+                    groups_member_is_part_of.append(GroupName)
+
+    return (member, groups_member_is_part_of)
+    
+
+
 
